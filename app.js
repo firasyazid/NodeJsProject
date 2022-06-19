@@ -1,54 +1,37 @@
 const express = require('express');
 const app = express(); 
- const morgan = require('morgan');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 
 require('dotenv/config');
 const api = process.env.API_URL;
 
+ 
+const productsRouter = require('./routers/products.js');
+const ordersRouter = require('./routers/order.js');
+const usersRouter = require('./routers/user.js');
+const categoriesRouter = require('./routers/categories.js');
+
+app.use(cors()); 
+app.options('*',cors ());
+//
 app.use(express.json()); 
 app.use(morgan('tiny'));
 
-const productSchema= mongoose.Schema({
-    name: String, 
-    image: String, 
-    countInStock:Number 
-
-})
-
-const Product = mongoose.model('Product',productSchema);
+//Routers
+app.use(`${api}/products`, productsRouter);
+app.use(`${api}/categories`, categoriesRouter);
+app.use(`${api}/orders`, ordersRouter);
+app.use(`${api}/users`, usersRouter);
 
 
-app.get (`${api}/products`, (req,res)=> { 
-    const product = { 
-        id:1 , 
-        name:"headphones",
-        image:"some_url",
 
-    };
 
-    res.send(product)
-})
-
-app.post (`${api}/products`, (req,res)=> { 
-    const product = new Product ({
-      name:  req.body.name, 
-      image : req.body.image , 
-      countInStock: req.body.countInStock
- })
- product.save().then((createdProduct => {
-res.status(201).json(createdProduct) 
  
 
-})).catch((err) => {
-res.status(500).json({
-error : err, 
-success: false 
-})
-})
 
- })
 
 //Database
 mongoose.connect(process.env.CONNECTION_STRING, {
