@@ -20,7 +20,7 @@ app.options('*',cors ());
 app.use(express.json()); 
 app.use(morgan('tiny'));
 
-//Routers
+//Routes
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoriesRouter);
 app.use(`${api}/orders`, ordersRouter);
