@@ -14,7 +14,8 @@ const productsRouter = require('./routers/products.js');
 const ordersRouter = require('./routers/order.js');
 const usersRouter = require('./routers/user.js');
 const categoriesRouter = require('./routers/categories.js');
-
+ 
+ 
 app.use(cors()); 
 app.options('*',cors ());
 //
@@ -29,6 +30,9 @@ app.use(`${api}/products`, productsRouter);
 app.use(`${api}/categories`, categoriesRouter);
 app.use(`${api}/orders`, ordersRouter);
 app.use(`${api}/users`, usersRouter);
+ 
+
+
 
 
 

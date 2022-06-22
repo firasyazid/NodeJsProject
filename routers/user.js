@@ -78,6 +78,9 @@ router.put('/:id',async (req, res)=> {
 
     res.send(user);
 })
+
+
+
 router.post('/login', async (req,res) => {
     const user = await User.findOne({email: req.body.email})
     const secret = process.env.secret;
@@ -92,7 +95,7 @@ router.post('/login', async (req,res) => {
                 isAdmin: user.isAdmin
             },
             secret,
-            {expiresIn : '1d'}
+            {expiresIn : '30d'}
         )
        
         res.status(200).send({user: user.email , token: token}) 
